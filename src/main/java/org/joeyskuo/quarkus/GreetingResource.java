@@ -15,4 +15,13 @@ public class GreetingResource {
         return "Hello World";
     }
 
+    @GET
+    @Path("/page")
+    @Produces(MediaType.TEXT_HTML)
+    public String helloHtml() {
+        return "<div>" +
+                "<h1>Book API</h1>" +
+                "<div>Hello World</div>" +
+                "</div>";
+    }
 }
