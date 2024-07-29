@@ -1,5 +1,6 @@
 package org.joeyskuo.quarkus;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -12,27 +13,26 @@ import java.util.Optional;
 @Path("/api/books")
 public class BookResource {
 
+    @Inject
+    BookRepository bookRepository;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Book> getAllBooks() {
-        return List.of(
-            new Book(1, "Understanding Quarkus", "jkuo", 2024, "Java"),
-            new Book(2, "Effective Java", "jkuo", 2022, "Java"),
-            new Book(3, "Practicing Quarkus", "antonio", 2020, "IT")
-        );
+        return bookRepository.getAllBooks();
     }
 
     @GET
     @Path("/count")
     @Produces(MediaType.TEXT_PLAIN)
     public int countAllBooks() {
-        return getAllBooks().size();
+        return bookRepository.countAllBooks();
     }
 
     @GET
     @Path("{id}")
     public Optional<Book> getBookById(@PathParam("id") int id) {
-        return getAllBooks().stream().filter(book -> book.id == id).findFirst();
+        return bookRepository.getBookById(id);
     }
 
     @GET
