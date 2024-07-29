@@ -21,6 +21,13 @@ public class BookResource {
     }
 
     @GET
+    @Path("/count")
+    @Produces(MediaType.TEXT_PLAIN)
+    public int countAllBooks() {
+        return getAllBooks().size();
+    }
+
+    @GET
     @Path("/page")
     @Produces(MediaType.TEXT_HTML)
     public String helloHtml() {
