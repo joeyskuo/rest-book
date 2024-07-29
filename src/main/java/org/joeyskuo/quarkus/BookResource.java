@@ -4,8 +4,10 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Path("/api/books")
 public class BookResource {
@@ -25,6 +27,12 @@ public class BookResource {
     @Produces(MediaType.TEXT_PLAIN)
     public int countAllBooks() {
         return getAllBooks().size();
+    }
+
+    @GET
+    @Path("{id}")
+    public Optional<Book> getBookById(@PathParam("id") int id) {
+        return getAllBooks().stream().filter(book -> book.id == id).findFirst();
     }
 
     @GET
