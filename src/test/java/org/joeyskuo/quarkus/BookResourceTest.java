@@ -1,20 +1,24 @@
 package org.joeyskuo.quarkus;
 
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-class GreetingResourceTest {
+class BookResourceTest {
     @Test
     void testHelloEndpoint() {
         given()
-          .when().get("/hello")
-          .then()
+            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+        .when()
+            .get("/api/books")
+        .then()
              .statusCode(200)
-             .body(is("Hello RESTEasy"));
+             .body("size()", is(3));
     }
 
 }
