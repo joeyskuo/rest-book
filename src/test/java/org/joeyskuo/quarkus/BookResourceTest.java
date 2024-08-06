@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 class BookResourceTest {
     @Test
-    void testHelloEndpoint() {
+    void shouldGetAllBooks() {
         given()
             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
         .when()
@@ -19,6 +19,17 @@ class BookResourceTest {
         .then()
              .statusCode(200)
              .body("size()", is(3));
+    }
+
+    @Test
+    void shouldCountAllBooks() {
+        given()
+                .header(HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN)
+                .when()
+                .get("/api/books/count")
+                .then()
+                .statusCode(200)
+                .body(is("3"));
     }
 
 }
